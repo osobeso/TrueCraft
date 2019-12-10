@@ -1,0 +1,26 @@
+name: IntelliCode
+
+on:
+  push:
+    branches:
+      - master
+      
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+    
+    - name: Check out code
+      uses: actions/checkout@v1
+    
+    - name: Docker Login
+      uses: Azure/docker-login@v1
+      with:
+        username: intellicodedev
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+        login-server: intellicodedev.azurecr.io
+
+    - name: Train IntelliCode Model
+      run: |
+        docker run -t -v "${{ github.workspace }}:C:\repo" -e "pat_token=${{ secrets.VSIC_PAT_TOKEN }}"  intellicodedev.azurecr.io/vsic:2019061202
