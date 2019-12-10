@@ -30,6 +30,7 @@ namespace TrueCraft
         private int NextEntityID { get; set; }
         private List<IEntity> Entities { get; set; } // TODO: Persist to disk
         private object EntityLock = new object();
+        // Comments added.
         private ConcurrentBag<IEntity> PendingDespawns { get; set; }
         private DateTime LastUpdate { get; set; }
 
