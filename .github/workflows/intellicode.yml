@@ -19,7 +19,7 @@ jobs:
            cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
            .\MSBuild.exe $Env:GITHUB_WORKSPACE\TrueCraft.sln
     - name: Train Intellicode Model
-      uses: osobeso/intellicode-team-model@v1
+      uses: osobeso/intellicode-team-model@releases/v1
       with: 
         pat-token: ${{ secrets.VSIC_PAT_TOKEN }}
         directory: ${{ github.workspace }}
