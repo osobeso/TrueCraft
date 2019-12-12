@@ -7,20 +7,20 @@ on:
       
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: windows-latest
 
     steps:
     
     - name: Check out code
       uses: actions/checkout@v1
     
-    - name: Docker Login
-      uses: Azure/docker-login@v1
-      with:
-        username: intellicodedev
-        password: ${{ secrets.REGISTRY_PASSWORD }}
-        login-server: intellicodedev.azurecr.io
-
-    - name: Train IntelliCode Model
+    - name: Dotnet Build
       run: |
-        docker run -t -v "${{ github.workspace }}:C:\repo" -e "pat_token=${{ secrets.VSIC_PAT_TOKEN }}"  intellicodedev.azurecr.io/vsic:2019061202
+           cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
+           .\MSBuild.exe $Env:GITHUB_WORKSPACE\TrueCraft.sln
+    - name: Train Intellicode Model
+      uses: osobeso/intellicode-team-model
+      with: 
+        pat-token: ${{ secrets.VSIC_PAT_TOKEN }}
+        directory: ${{ github.workspace }}
+      
